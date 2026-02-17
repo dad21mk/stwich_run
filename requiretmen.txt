@@ -1,0 +1,42 @@
+// ============================
+// LLM Cursor Tool Dependencies
+// ============================
+
+// Install all:
+//   pip install -r requiretmen.txt
+
+// Core
+openai
+pyautogui
+Pillow
+
+// Hotkeys & system tray
+keyboard
+pystray
+
+// EXE build (optional, only needed to compile)
+pyinstaller
+
+// ============================
+// How to run
+// ============================
+// 1. Start LM Studio with a vision model (e.g. gemma3:4b)
+// 2. Enable the local server in LM Studio (localhost:1234)
+// 3. Run: python llm_cursor_tool.py
+//    OR build EXE: python build.py
+
+// ============================
+// Hotkeys
+// ============================
+// Ctrl+M  -> Start automation
+// Ctrl+;  -> Stop automation
+
+// ============================
+// Token (LM Studio)
+// ============================
+// sk-lm-mf8uvyrC:laCnycdIZGOdzEQOqhTQ
+
+// ============================
+// Model
+// ============================
+// gemma3:4b

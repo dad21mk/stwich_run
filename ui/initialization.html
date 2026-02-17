@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Initialization Sequence</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Share+Tech+Mono&amp;family=Chakra+Petch:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f9b406",
+                        "primary-dim": "#b38000",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#0A0B0C", 
+                        "surface": "#1A1C1E",
+                        "steel": "#E0E0E0",
+                        "muted": "#4A5568",
+                        "laser": "#00FF41",
+                        "alert": "#FF3333",
+                    },
+                    fontFamily: {
+                        "display": ["Chakra Petch", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                        "tech": ["Share Tech Mono", "monospace"],
+                    },
+                    backgroundImage: {
+                        'scanlines': 'repeating-linear-gradient(0deg, rgba(0,0,0,0.1), rgba(0,0,0,0.1) 1px, transparent 1px, transparent 2px)',
+                    },
+                    animation: {
+                        'spin-slow': 'spin 8s linear infinite',
+                        'blink': 'blink 0.1s step-end infinite alternate',
+                    },
+                    keyframes: {
+                        blink: {
+                            '50%': { opacity: '0' },
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Scrollbar for industrial feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1A1C1E;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4A5568;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f9b406;
+        }
+
+        .crt-glow {
+            text-shadow: 0 0 5px rgba(249, 180, 6, 0.4);
+        }
+        
+        .scanline-overlay {
+            background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.2), rgba(0,0,0,0.2) 1px, transparent 1px, transparent 2px);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-steel font-mono h-screen w-full flex items-center justify-center overflow-hidden relative selection:bg-primary selection:text-black">
+<!-- Scanline Overlay -->
+<div class="absolute inset-0 z-50 scanline-overlay h-full w-full"></div>
+<!-- Main Container -->
+<div class="relative z-10 w-full max-w-[420px] p-1">
+<!-- Decorative Industrial Border -->
+<div class="border border-muted bg-surface/50 p-8 shadow-[inset_0_0_20px_rgba(0,0,0,0.8)] relative">
+<!-- Corner Accents -->
+<div class="absolute top-0 left-0 w-4 h-4 border-l-2 border-t-2 border-primary"></div>
+<div class="absolute top-0 right-0 w-4 h-4 border-r-2 border-t-2 border-primary"></div>
+<div class="absolute bottom-0 left-0 w-4 h-4 border-l-2 border-b-2 border-primary"></div>
+<div class="absolute bottom-0 right-0 w-4 h-4 border-r-2 border-b-2 border-primary"></div>
+<!-- Header / Sigil -->
+<div class="flex flex-col items-center justify-center mb-8">
+<div class="relative w-24 h-24 mb-6 flex items-center justify-center">
+<!-- Rotating Outer Ring -->
+<svg class="w-full h-full text-muted animate-spin-slow opacity-50 absolute" fill="none" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<path d="M50 5 L50 10 M95 50 L90 50 M50 95 L50 90 M5 50 L10 50" stroke="currentColor" stroke-width="2"></path>
+<circle cx="50" cy="50" r="44" stroke="currentColor" stroke-dasharray="4 4" stroke-width="1"></circle>
+</svg>
+<!-- Inner Gear/Chip Hybrid (Static or Counter-rotating) -->
+<div class="relative w-16 h-16 text-primary animate-[spin_12s_linear_infinite_reverse]">
+<svg class="w-full h-full drop-shadow-[0_0_8px_rgba(249,180,6,0.6)]" fill="currentColor" viewbox="0 0 24 24">
+<path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.49l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"></path>
+</svg>
+</div>
+<!-- Center Chip Detail -->
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-4 h-4 bg-black border border-primary"></div>
+</div>
+</div>
+<h2 class="font-display font-bold text-2xl tracking-widest text-white uppercase mb-1">Initialization</h2>
+<div class="font-tech text-primary text-xs tracking-[0.2em] opacity-80">NEURAL_ENGINE V2.4.0-A</div>
+</div>
+<!-- Boot Log Terminal -->
+<div class="w-full bg-black border border-muted/30 p-4 h-32 mb-6 font-mono text-sm overflow-hidden flex flex-col justify-end relative shadow-inner">
+<!-- Gradient mask for top fade -->
+<div class="absolute top-0 left-0 w-full h-8 bg-gradient-to-b from-black to-transparent pointer-events-none z-10"></div>
+<div class="flex flex-col gap-1 z-0" id="boot-log">
+<!-- Logs will be injected here via JS -->
+<div class="flex justify-between items-center opacity-40">
+<span class="text-muted">&gt; SYSTEM_WAKE</span>
+<span class="text-primary">[OK]</span>
+</div>
+</div>
+</div>
+<!-- Segmented Progress Bar -->
+<div class="w-full mb-2">
+<div class="flex justify-between text-[10px] font-tech text-muted mb-1 uppercase tracking-wider">
+<span>Loading Core Modules</span>
+<span id="percent-display">0%</span>
+</div>
+<!-- 20 Blocks -->
+<div class="flex gap-[2px] h-3 w-full" id="progress-bar">
+<!-- Blocks injected via JS -->
+<div class="flex-1 bg-muted/20"></div>
+<div class="flex-1 bg-muted/20"></div>
+<div class="flex-1 bg-muted/20"></div>
+<div class="flex-1 bg-muted/20"></div>
+<div class="flex-1 bg-muted/20"></div>
+<div class="flex-1 bg-muted/20"></div>
+<div class="flex-1 bg-muted/20"></div>
+<div class="flex-1 bg-muted/20"></div>
+<div class="flex-1 bg-muted/20"></div>
+<div class="flex-1 bg-muted/20"></div>
+<div class="flex-1 bg-muted/20"></div>
+<div class="flex-1 bg-muted/20"></div>
+<div class="flex-1 bg-muted/20"></div>
+<div class="flex-1 bg-muted/20"></div>
+<div class="flex-1 bg-muted/20"></div>
+<div class="flex-1 bg-muted/20"></div>
+<div class="flex-1 bg-muted/20"></div>
+<div class="flex-1 bg-muted/20"></div>
+<div class="flex-1 bg-muted/20"></div>
+<div class="flex-1 bg-muted/20"></div>
+</div>
+</div>
+<!-- Footer Status -->
+<div class="flex justify-between items-center mt-6 pt-4 border-t border-muted/20">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="text-[10px] font-tech text-muted tracking-widest">MEM_CHECK: PASS</span>
+</div>
+<span class="text-[10px] font-tech text-muted">ID: 884-X9</span>
+</div>
+</div>
+</div>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const logContainer = document.getElementById('boot-log');
+            const progressBar = document.getElementById('progress-bar');
+            const percentDisplay = document.getElementById('percent-display');
+            
+            // Clear initial placeholders
+            logContainer.innerHTML = '';
+            progressBar.innerHTML = '';
+
+            // Create 20 empty blocks
+            const blocks = [];
+            for(let i=0; i<20; i++) {
+                const block = document.createElement('div');
+                block.className = 'flex-1 bg-muted/10 transition-colors duration-75'; // Duration added for slight visual snap
+                progressBar.appendChild(block);
+                blocks.push(block);
+            }
+
+            const logs = [
+                { text: 'BIOS_CHECK_INTEGRITY', status: 'OK' },
+                { text: 'ALLOCATING_VRAM_BLOCKS', status: '14GB' },
+                { text: 'CHECKING_CUDA_CORES', status: 'OK' },
+                { text: 'MOUNTING_TENSORS', status: 'DONE' },
+                { text: 'LOADING_WEIGHTS_Q4', status: '...' },
+                { text: 'ESTABLISHING_UPLINK', status: 'OK' },
+                { text: 'NEURAL_ENGINE_READY', status: 'RDY' }
+            ];
+
+            let logIndex = 0;
+            let progress = 0; // 0 to 20
+            
+            // Helper to add log
+            const addLog = (entry) => {
+                const div = document.createElement('div');
+                div.className = 'flex justify-between items-center animate-[fadeIn_0.1s_ease-out]';
+                
+                const statusColor = entry.status === 'OK' || entry.status === 'RDY' || entry.status === 'DONE' 
+                    ? 'text-laser' 
+                    : (entry.status === '...' ? 'text-primary' : 'text-primary');
+
+                div.innerHTML = `
+                    <span class="text-steel/80 text-xs">> ${entry.text}</span>
+                    <span class="${statusColor} text-xs font-bold font-tech tracking-wider">[${entry.status}]</span>
+                `;
+                logContainer.appendChild(div);
+                
+                // Keep scrolled to bottom
+                logContainer.scrollTop = logContainer.scrollHeight;
+            };
+
+            // Main loop simulation
+            const totalDuration = 2500; // 2.5s
+            const intervalTime = totalDuration / 20; // Time per block
+
+            const interval = setInterval(() => {
+                progress++;
+                
+                // Update Progress Bar
+                if (progress <= 20) {
+                    blocks[progress - 1].className = 'flex-1 bg-primary shadow-[0_0_8px_rgba(249,180,6,0.6)]';
+                    percentDisplay.innerText = Math.floor((progress / 20) * 100) + '%';
+                }
+
+                // Add logs based on progress thresholds roughly
+                if (progress === 1) addLog(logs[0]);
+                if (progress === 4) addLog(logs[1]);
+                if (progress === 8) addLog(logs[2]);
+                if (progress === 12) addLog(logs[3]);
+                if (progress === 15) addLog(logs[4]);
+                if (progress === 18) addLog(logs[5]);
+                if (progress === 20) {
+                    addLog(logs[6]);
+                    clearInterval(interval);
+                    
+                    setTimeout(() => {
+                        // Simulate redirect or completion
+                        percentDisplay.innerText = "COMPLETE";
+                        percentDisplay.classList.add('text-laser');
+                        document.querySelector('h2').innerText = "SYSTEM READY";
+                        document.querySelector('h2').classList.add('text-laser');
+                        
+                        // In a real app, this would redirect:
+                        // window.location.href = '/dashboard';
+                    }, 300);
+                }
+
+            }, intervalTime);
+        });
+    </script>
+</body></html>

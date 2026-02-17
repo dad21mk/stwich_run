@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cyber-Industrial Control // Output Terminal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Chakra+Petch:wght@400;500;600;700&amp;family=Share+Tech+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FFB800", // Safety Amber
+                        "primary-dim": "#b38100",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#0A0B0C", // Deep Carbon
+                        "surface": "#1A1C1E", // Gunmetal
+                        "steel": "#E0E0E0", // Raw Steel
+                        "oxidized": "#4A5568", // Muted
+                        "laser": "#00FF41", // Laser Green
+                        "alert": "#FF3333", // Alert Red
+                    },
+                    fontFamily: {
+                        "display": ["Chakra Petch", "Space Grotesk", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                        "tech": ["Share Tech Mono", "monospace"],
+                        "body": ["Space Grotesk", "sans-serif"],
+                    },
+                    boxShadow: {
+                        "inset-panel": "inset 2px 2px 6px rgba(0,0,0,0.8)",
+                        "inset-screen": "inset 0 0 20px rgba(0,0,0,0.9)",
+                        "glow": "0 0 10px rgba(255, 184, 0, 0.3)",
+                        "glow-text": "0 0 4px rgba(255, 184, 0, 0.5)",
+                        "glow-laser": "0 0 5px rgba(0, 255, 65, 0.4)",
+                        "glow-alert": "0 0 8px rgba(255, 51, 51, 0.6)",
+                    },
+                    backgroundImage: {
+                        "scanlines": "repeating-linear-gradient(0deg, rgba(0,0,0,0.2), rgba(0,0,0,0.2) 1px, transparent 1px, transparent 2px)",
+                        "carbon-fiber": "radial-gradient(black 15%, transparent 16%) 0 0, radial-gradient(black 15%, transparent 16%) 8px 8px, radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px, radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px",
+                    },
+                    animation: {
+                        'blink-hard': 'blink-hard 1s steps(2, start) infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        'blink-hard': {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0' },
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for that industrial feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1A1C1E; 
+            border-left: 1px solid #4A5568;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4A5568; 
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FFB800; 
+        }
+
+        .crt-overlay {
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        /* Glitch effect utility */
+        .glitch-text:hover {
+            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+            color: #FFB800;
+        }
+        @keyframes glitch {
+            0% { transform: translate(0) }
+            20% { transform: translate(-2px, 2px) }
+            40% { transform: translate(-2px, -2px) }
+            60% { transform: translate(2px, 2px) }
+            80% { transform: translate(2px, -2px) }
+            100% { transform: translate(0) }
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-steel font-body h-screen flex flex-col overflow-hidden selection:bg-primary selection:text-black">
+<!-- Top Navbar (Modified for Industrial Theme) -->
+<header class="shrink-0 flex items-center justify-between border-b border-oxidized bg-surface px-6 py-3 z-20 shadow-md relative">
+<div class="flex items-center gap-4">
+<!-- Rotating decorative icon -->
+<div class="size-8 text-primary animate-pulse-slow">
+<span class="material-symbols-outlined text-3xl">hub</span>
+</div>
+<div>
+<h2 class="text-white text-xl font-display font-bold leading-tight tracking-wider uppercase">CYBER_CTRL <span class="text-primary">//</span> TERMINAL_VIEW</h2>
+<div class="flex gap-2 items-center text-[10px] font-tech text-oxidized tracking-widest">
+<span>SYS_VER: 4.0.2</span>
+<span class="w-1 h-1 rounded-full bg-primary/50"></span>
+<span>LINK_ESTABLISHED</span>
+</div>
+</div>
+</div>
+<div class="flex gap-3 items-center">
+<div class="hidden md:flex flex-col items-end mr-4">
+<span class="text-[10px] text-oxidized font-tech uppercase tracking-widest">Connection</span>
+<span class="text-xs text-laser font-mono font-bold flex items-center gap-1">
+<span class="w-2 h-2 bg-laser rounded-full animate-pulse"></span> SECURE
+                </span>
+</div>
+<button class="flex items-center justify-center h-9 px-4 bg-oxidized/20 border border-oxidized text-steel hover:bg-oxidized/40 hover:text-white hover:border-white transition-all duration-75 uppercase font-bold text-xs tracking-wider font-display rounded-sm group">
+<span class="material-symbols-outlined text-sm mr-2 group-hover:rotate-90 transition-transform">settings</span>
+                CONFIG
+            </button>
+<button class="flex items-center justify-center h-9 px-4 bg-primary text-black hover:bg-white transition-colors duration-75 uppercase font-bold text-xs tracking-wider font-display rounded-sm shadow-glow">
+<span class="material-symbols-outlined text-sm mr-2">power_settings_new</span>
+                LOGOUT
+            </button>
+</div>
+</header>
+<!-- Main Workspace -->
+<main class="flex-1 flex overflow-hidden relative">
+<!-- Left Sidebar: Context/Hardware (Visual Decoration mostly) -->
+<aside class="hidden lg:flex w-16 border-r border-oxidized bg-[#0f1112] flex-col items-center py-6 gap-6 z-10">
+<div class="text-oxidized writing-vertical-rl rotate-180 text-[10px] font-tech tracking-[0.2em] opacity-50 select-none">
+                HARDWARE_BUS_A1
+            </div>
+<div class="flex flex-col gap-4 mt-auto">
+<div class="w-1 h-12 bg-oxidized/30 rounded-full relative overflow-hidden">
+<div class="absolute bottom-0 left-0 w-full bg-primary h-[60%] animate-pulse"></div>
+</div>
+<div class="w-1 h-12 bg-oxidized/30 rounded-full relative overflow-hidden">
+<div class="absolute bottom-0 left-0 w-full bg-laser h-[85%] animate-pulse"></div>
+</div>
+</div>
+</aside>
+<!-- Center Stage: The Terminal -->
+<section class="flex-1 flex flex-col relative bg-background-dark p-4 md:p-6 lg:p-8 w-full max-w-7xl mx-auto">
+<!-- Terminal Container -->
+<div class="flex flex-col flex-1 border border-oxidized bg-[#000000] shadow-inset-screen relative overflow-hidden rounded-sm">
+<!-- CRT Effects -->
+<div class="absolute inset-0 bg-scanlines opacity-30 pointer-events-none z-10"></div>
+<div class="absolute inset-0 crt-overlay opacity-20 pointer-events-none z-10"></div>
+<!-- 1. Header Strip -->
+<div class="flex items-center justify-between bg-surface/90 border-b border-oxidized px-4 py-2 z-20 backdrop-blur-sm">
+<div class="flex items-center gap-6">
+<div class="flex flex-col">
+<span class="text-[10px] text-oxidized font-tech uppercase tracking-wider leading-none mb-1">Stream_ID</span>
+<span class="text-primary font-mono text-sm tracking-wide">9948-X::ALPHA</span>
+</div>
+<div class="h-6 w-px bg-oxidized/50"></div>
+<div class="flex flex-col">
+<span class="text-[10px] text-oxidized font-tech uppercase tracking-wider leading-none mb-1">Model</span>
+<span class="text-steel font-mono text-sm tracking-wide">LLAMA-3-70B-INSTRUCT</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<!-- Live Telemetry Visualization -->
+<div class="flex items-center gap-2">
+<div class="flex gap-0.5 h-3 items-end">
+<div class="w-1 bg-primary h-full"></div>
+<div class="w-1 bg-primary h-[80%]"></div>
+<div class="w-1 bg-primary h-[60%]"></div>
+<div class="w-1 bg-primary/50 h-[40%]"></div>
+<div class="w-1 bg-primary/30 h-[90%]"></div>
+</div>
+<div class="flex flex-col text-right">
+<span class="text-[10px] text-oxidized font-tech uppercase tracking-wider leading-none mb-1">TOK/SEC</span>
+<span class="text-primary font-mono text-sm font-bold">45.2</span>
+</div>
+</div>
+<div class="h-6 w-px bg-oxidized/50"></div>
+<span class="flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+</div>
+</div>
+<!-- 2. Text Canvas -->
+<div class="flex-1 overflow-y-auto p-6 font-mono text-primary/90 text-sm md:text-base leading-relaxed relative z-0 custom-scrollbar">
+<!-- Pre-rendered conversation history for context -->
+<div class="opacity-50 mb-6 border-l-2 border-oxidized pl-4">
+<span class="text-oxidized text-xs mb-1 block font-tech uppercase">&gt; USER_INPUT_BUFFER</span>
+<p class="text-steel">Analyze the structural integrity of the main propulsion shaft given the alloy composition [FE: 88%, CR: 10%, NI: 2%] under 4000K thermal load.</p>
+</div>
+<!-- The Active Stream -->
+<div class="relative">
+<span class="text-primary shadow-glow-text">
+                            ANALYSIS_INITIATED... <br/>
+                            LOADING THERMAL_MODELS [V.4.2]... OK.<br/>
+<br/>
+<span class="text-white bg-primary/20 px-1">&gt;&gt; OUTPUT_STREAM_ACTIVE</span><br/><br/>
+                            Based on the provided alloy composition (Series-800 Steel Variant), the material exhibits a crystalline degradation point at approximately 3850K. Under a sustained load of 4000K, structural failure is <span class="text-alert font-bold">IMMINENT</span>.<br/><br/>
+                            CALCULATION_MATRIX:<br/>
+                            -------------------<br/>
+                            &gt; Melting Point: ~1750K (Base Iron)<br/>
+                            &gt; Alloy Offset: +450K (Chromium reinforcement)<br/>
+                            &gt; Coolant Flow Req: 850 L/min<br/>
+                            &gt; Structural Integrity: 12% [CRITICAL]<br/>
+<br/>
+                            RECOMMENDATION: Immediate engagement of auxiliary cooling loops. Reduce output thrust to 65% to prevent catastrophic shear stress on the main shaft. 
+                            <br/><br/>
+                            Generating patch sequence for flight computer
+                        </span>
+<!-- Blinking Cursor -->
+<span class="inline-block w-2.5 h-5 bg-primary align-middle animate-blink-hard ml-1 shadow-glow"></span>
+</div>
+</div>
+<!-- 3. Control Footer (Integrated into Terminal) -->
+<div class="bg-surface border-t border-oxidized p-3 z-20 flex flex-col md:flex-row gap-3 items-stretch justify-between shadow-[0_-4px_10px_rgba(0,0,0,0.5)]">
+<!-- Critical Action -->
+<button class="group relative overflow-hidden bg-alert/10 hover:bg-alert border border-alert text-alert hover:text-white px-6 py-2 rounded-sm transition-all duration-100 flex items-center justify-center gap-3 active:translate-y-0.5 shadow-glow-alert">
+<div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagonal-stripes.png')] opacity-10"></div>
+<span class="material-symbols-outlined text-lg">block</span>
+<span class="font-display font-bold tracking-widest text-sm">ABORT_STREAM</span>
+</button>
+<!-- Utilities -->
+<div class="flex gap-3">
+<button class="bg-transparent border border-steel/30 text-steel hover:border-primary hover:text-primary hover:bg-primary/5 px-5 py-2 rounded-sm transition-colors duration-100 flex items-center gap-2 font-mono text-xs uppercase tracking-wider group">
+<span class="material-symbols-outlined text-base group-hover:scale-110 transition-transform">content_copy</span>
+                            COPY_BUFFER
+                        </button>
+<button class="bg-steel/10 border border-steel/50 text-white hover:bg-steel/20 hover:border-white px-5 py-2 rounded-sm transition-colors duration-100 flex items-center gap-2 font-display font-bold text-xs uppercase tracking-wider shadow-inner">
+<span class="material-symbols-outlined text-base">restart_alt</span>
+                            NEW_SESSION
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Decoration/Metadata -->
+<aside class="hidden xl:flex w-72 bg-surface border-l border-oxidized flex-col p-6 gap-6 z-10 shadow-[-10px_0_20px_rgba(0,0,0,0.5)]">
+<div class="border-b border-oxidized pb-2 mb-2">
+<h3 class="font-display text-white text-sm font-bold uppercase tracking-wider">Session_Metadata</h3>
+</div>
+<div class="space-y-4">
+<div class="bg-background-dark border border-oxidized p-3 rounded-sm shadow-inset-panel">
+<div class="text-[10px] text-oxidized font-tech uppercase mb-1">Temperature</div>
+<div class="flex justify-between items-end">
+<span class="text-primary font-mono text-lg">0.70</span>
+<span class="text-oxidized text-xs font-mono">STD</span>
+</div>
+<div class="w-full bg-oxidized/20 h-1 mt-2 rounded-full overflow-hidden">
+<div class="bg-primary w-[70%] h-full"></div>
+</div>
+</div>
+<div class="bg-background-dark border border-oxidized p-3 rounded-sm shadow-inset-panel">
+<div class="text-[10px] text-oxidized font-tech uppercase mb-1">Top_P</div>
+<div class="flex justify-between items-end">
+<span class="text-primary font-mono text-lg">0.90</span>
+<span class="text-oxidized text-xs font-mono">HIGH</span>
+</div>
+<div class="w-full bg-oxidized/20 h-1 mt-2 rounded-full overflow-hidden">
+<div class="bg-primary w-[90%] h-full"></div>
+</div>
+</div>
+<div class="bg-background-dark border border-oxidized p-3 rounded-sm shadow-inset-panel">
+<div class="text-[10px] text-oxidized font-tech uppercase mb-1">Context_Window</div>
+<div class="flex justify-between items-end">
+<span class="text-laser font-mono text-lg">14%</span>
+<span class="text-oxidized text-xs font-mono">USED</span>
+</div>
+<div class="w-full bg-oxidized/20 h-1 mt-2 rounded-full overflow-hidden">
+<div class="bg-laser w-[14%] h-full"></div>
+</div>
+</div>
+</div>
+<div class="mt-auto border-t border-oxidized pt-4 opacity-50">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-oxidized text-sm">lock</span>
+<span class="text-[10px] font-tech text-oxidized tracking-widest">ENCRYPTION: AES-256</span>
+</div>
+<div class="h-24 w-full bg-[url('https://www.transparenttextures.com/patterns/graphy.png')] opacity-20"></div>
+</div>
+</aside>
+</main>
+<!-- 04 System Diagnostics (Footer) -->
+<footer class="h-10 bg-[#050505] border-t border-oxidized flex items-center justify-between px-4 shrink-0 z-30 font-mono text-xs select-none">
+<div class="flex items-center gap-6 h-full">
+<!-- VRAM -->
+<div class="flex items-center gap-3 border-r border-oxidized/30 pr-6 h-full">
+<span class="text-oxidized">VRAM:</span>
+<span class="text-steel">14.2<span class="text-oxidized">/</span>24 GB</span>
+<div class="flex gap-0.5">
+<!-- 10 segments -->
+<div class="w-1 h-3 bg-primary"></div>
+<div class="w-1 h-3 bg-primary"></div>
+<div class="w-1 h-3 bg-primary"></div>
+<div class="w-1 h-3 bg-primary"></div>
+<div class="w-1 h-3 bg-primary"></div>
+<div class="w-1 h-3 bg-primary"></div>
+<div class="w-1 h-3 bg-oxidized/30"></div>
+<div class="w-1 h-3 bg-oxidized/30"></div>
+<div class="w-1 h-3 bg-oxidized/30"></div>
+<div class="w-1 h-3 bg-oxidized/30"></div>
+</div>
+</div>
+<!-- GPU Temp -->
+<div class="flex items-center gap-2 border-r border-oxidized/30 pr-6 h-full">
+<span class="text-oxidized">GPU:</span>
+<span class="text-steel">64°C</span>
+</div>
+<!-- Latency (Hidden on Tablet per PRD, shown here for desktop) -->
+<div class="hidden md:flex items-center gap-2 h-full text-oxidized">
+<span>LAT:</span>
+<span class="text-laser shadow-glow-laser">24ms</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[10px] text-oxidized font-tech hidden sm:block">SYS_STATUS::NORMAL</span>
+<div class="h-3 w-3 rounded-full bg-laser shadow-glow-laser animate-pulse"></div>
+</div>
+</footer>
+</body></html>
